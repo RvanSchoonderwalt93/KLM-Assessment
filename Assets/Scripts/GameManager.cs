@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     private bool lightsOn;
 
     [SerializeField]
+    private Button parkButton;
+    public int parkedPlanes;
+
+    [SerializeField]
     private GameObject[] airplanes;
     [SerializeField]
     private List<int> airplaneNumbers;
@@ -22,10 +26,6 @@ public class GameManager : MonoBehaviour
     private GameObject[] hangars;
     [SerializeField]
     private List<int> hangarNumbers;
-
-    [SerializeField]
-    private GameObject checkmark;
-    public int parkedPlanes;
 
     void Awake()
     {
@@ -56,9 +56,11 @@ public class GameManager : MonoBehaviour
 
     public void Park()
     {
+        ChangeButtonColor(1, 0, 0, .5f, parkButton);
+
         foreach (var a in airplanes)
         {
-            a.GetComponent<AirplaneController>().park = true;
+            a.GetComponent<AirplaneController>().park = true;            
         }
     }
 
@@ -66,8 +68,16 @@ public class GameManager : MonoBehaviour
     {
         if (parkedPlanes == airplanes.Length)
         {
-            checkmark.SetActive(true);
+            ChangeButtonColor(0, 1, 0, .5f, parkButton);
         }
+    }
+
+    void ChangeButtonColor(int r, int g, int b, float alpha, Button button)
+    {
+        button.interactable = false;
+        var newColor = button.colors;
+        newColor.disabledColor = new Color(r, g, b, alpha);
+        button.colors = newColor;
     }
 
     public void LightsOnOff()
