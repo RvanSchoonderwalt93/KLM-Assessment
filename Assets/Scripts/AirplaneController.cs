@@ -29,8 +29,10 @@ public class AirplaneController : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        SetAgentValues(agent);
 
         hangars = GameObject.FindGameObjectsWithTag("Hangar");
+
         for (int i = 0; i < hangars.Length; i++)
         {
             if (gameObject.name == hangars[i].name)
@@ -44,6 +46,14 @@ public class AirplaneController : MonoBehaviour
         lightsOn = false;
 
         SetRandomDestination();
+    }
+
+    void SetAgentValues(NavMeshAgent a)
+    {
+        a.speed = airplane.speed;
+        a.angularSpeed = airplane.angularSpeed;
+        a.acceleration = airplane.acceleration;
+        a.autoBraking = airplane.autoBreaking;
     }
 
     void Update()
